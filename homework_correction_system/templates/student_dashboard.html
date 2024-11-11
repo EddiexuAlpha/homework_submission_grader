@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Dashboard</title>
+</head>
+<body>
+    <h2>Welcome, {{ username }} (Student)</h2>
+    <h3>Available Assignments:</h3>
+    <ul>
+        {% for assignment in assignments %}
+        <li>
+            {{ assignment.title }}
+            <form action="{{ url_for('upload_submission', assignment_id=assignment.id) }}" method="get" style="display:inline;">
+                <button type="submit">Submit Assignment</button>
+            </form>            
+            {% if assignment.id in feedbacks %}
+            - Feedback Received
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+    <h3>Your Submissions:</h3>
+    <ul>
+        {% for assignment in assignments %}
+        {% if assignment.id in feedbacks %}
+        <li>
+            {{ assignment.title }} - Feedback Received
+            <button onclick="toggleFeedback({{ assignment.id }})">View Feedback</button>
+            <div id="feedback-{{ assignment.id }}" style="display:none;">
+                <pre>{{ feedbacks[assignment.id] }}</pre>
+            </div>
+        </li>
+        {% endif %}
+        {% endfor %}
+    </ul>
+
+    <script>
+    function toggleFeedback(id) {
+        var x = document.getElementById('feedback-' + id);
+        if (x.style.display === 'none') {
+            x.style.display = 'block';
+        } else {
+            x.style.display = 'none';
+        }
+    }
+    </script>
+
+    <a href="{{ url_for('logout') }}">Logout</a>
+</body>
+</html>

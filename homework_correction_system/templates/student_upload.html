@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Assignment</title>
+</head>
+<body>
+    <h2>Upload Assignment: {{ assignment.title }}</h2>
+    <form method="post" enctype="multipart/form-data">
+        Assignment File (PDF): <input type="file" name="submission"><br><br>
+        <input type="submit" value="Upload">
+    </form>    
+</body>
+</html>
